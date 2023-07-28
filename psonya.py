@@ -69,5 +69,5 @@ sys.stdout = sys.__stdout__
 sys.stderr = sys.__stderr__
 
 # Needs ensure_ascii=False
-response = json.dumps([obj.__dict__ for obj in products], indent=4, ensure_ascii=False)
+response = json.dumps([obj.__dict__ for obj in products], ensure_ascii=False, separators=(',', ':'))
 print(response)
