@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import sys
 from fetch_product import ProductFetcher
 
 app = Flask(__name__)
@@ -20,22 +21,25 @@ def get_product():
     if product_id is None:
         return jsonify({"error": "Product ID not provided."}), 400
 
-    fetcher = ProductFetcher()
-    product_data = fetcher.fetch_product_data(product_id)
-    fetcher.close()
+    if '-x' in sys.argv:
+        fetcher = ProductFetcher()
+        product_data = fetcher.fetch_product_data(product_id)
+        fetcher.close()
+        if product_data is None:
+            return jsonify({"error": "Product not found."}), 404
 
-    if product_data is None:
-        return jsonify({"error": "Product not found."}), 404
+        response = jsonify(product_data)
+        return response
 
-    response = jsonify(product_data)
-    return response
+    else:
+        with open('products.json', 'r') as json_file:
+            data = json.load(json_file)
+
+        product = next((item for item in data if item['code'] == product_id), None)
+        if product is None:
+            return jsonify({"error": "Product not found."}), 404
+
+        return jsonify(product)
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1')
-
-#  NGINX:
-# location /products {
-#     proxy_pass http://127.0.0.1:5000;
-#     proxy_set_header Host $host;
-#     proxy_set_header X-Real-IP $remote_addr;
-# }
