@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import sys
+import json
 from fetch_product import ProductFetcher
 
 app = Flask(__name__)
