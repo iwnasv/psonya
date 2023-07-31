@@ -1,6 +1,10 @@
 # psonya
 wrapper for supermarket product data
 
+![example](https://github.com/iwnasv/psonya/blob/main/f-katanalotis.png?raw=true)
+
+pictured: example basic front-end usage
+
 ## Base URL
 
 The base URL for the Product API is `https://analipsi.online`.
