@@ -1,9 +1,11 @@
 # psonya
 wrapper for supermarket product data
 
+[Try my basic frontend](https://ionas.dev/psonya/)
+
 ## Base URL
 
-The base URL for the Product API is `https://analipsi.online`.
+The base URL for the Product API is `https://analipsi.online`. I'm not going to keep the data updated or guarantee consistency and availability, it's a testing environment and currently geoIP-limited.
 
 ## Authentication
 
