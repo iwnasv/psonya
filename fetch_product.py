@@ -6,17 +6,19 @@ class ProductFetcher:
     def __init__(self):
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument("--headless")
-        if os.name == "posix":  # Unix-based system
-            self.chrome_options.binary_location = "chromedriver"
-            self.chrome_options.add_argument("--remote-debugging-port=9515")
-        else:  # Windows system
-            self.chrome_options.binary_location = r"C:\Users\iwnaras\Downloads\chrome-win64\chrome.exe"
-
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.chrome_options.add_argument("--disable-logging")
         self.chrome_options.add_argument("--log-level=0")
+
+        if os.name == "posix":
+            executable = "/usr/bin/chromium"
+        else:
+            executable = r"C:\Users\iwnaras\Downloads\chrome-win64\chrome.exe"
+        self.chrome_options.binary_location = executable
+
         self.driver = webdriver.Chrome(options=self.chrome_options)
         self.product_data = {}
+        self.i = 0 # disassociate product code from array index
 
     def fetch_product_data(self, product_id):
         url = f"https://e-katanalotis.gov.gr/product/{product_id}"
@@ -34,16 +36,15 @@ class ProductFetcher:
         pic = pic_element['src'] if pic_element else None
 
         # If any of the essential attributes are "N/A", return None
-        if name is None or price is None or store is None or pic is None:
-            self.product_data[product_id] = None
-        else:
-            self.product_data[product_id] = {
+        if name is not None or price is not None or store is not None:
+            self.product_data[self.i] = {
                 "code": product_id,
                 "name": name,
                 "price": price,
                 "store": store,
                 "pic": pic
             }
+            self.i += 1
 
     def close(self):
         self.driver.quit()
