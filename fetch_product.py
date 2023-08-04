@@ -7,6 +7,7 @@ class ProductFetcher:
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument("--headless")
         if os.name == "posix":  # Unix-based system
+            self.chrome_options.binary_location = "chromedriver"
             self.chrome_options.add_argument("--remote-debugging-port=9515")
         else:  # Windows system
             self.chrome_options.binary_location = r"C:\Users\iwnaras\Downloads\chrome-win64\chrome.exe"
