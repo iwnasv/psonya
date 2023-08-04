@@ -22,10 +22,6 @@ def get_product():
     product_id = request.args.get('id', type=int)
     api_key = request.args.get('key')
 
-    # Check if the ID is provided and valid
-    if product_id is None:
-        return jsonify({"error": "Product ID not provided."}), 400
-
     # Check if the API key is provided and valid
     if api_key is None:
         return jsonify({"error": "API key not provided."}), 400
@@ -45,7 +41,7 @@ def get_product():
         return response
 
     else:
-        if product_id == 0:
+        if product_id is None:
             # Read and return the whole JSON file
             with open('products.json', 'r') as json_file:
                 data = json.load(json_file)
