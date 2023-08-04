@@ -33,11 +33,11 @@ To access the Product API, you need to provide an API key as a query parameter `
      - Error (404 Not Found): Returns a JSON response with an error message if the requested product is not found.
 
 2. **Get All Products**
-   - URL: `/products?id=0&key={api_key}`
+   - URL: `/products?key={api_key}`
    - Method: GET
    - Description: This endpoint allows you to retrieve information about all products available in the system. It's not available if the script's running with the -x (live fetch on each request) argument. Why is it called -x? Because x is the cool letter and this functionality is cool.
    - Parameters:
-     - `id`: (required) Set this parameter to 0 to get information about all products.
+     - `id`: (omitted) Don't set this to get information about all products.
      - `key`: (required) The unhashed API key used for authentication.
 
    - Response:
@@ -67,7 +67,7 @@ To access the Product API, you need to provide an API key as a query parameter `
      ```
 
 2. Get All Products:
-   - Request: `GET http://127.0.0.1:5000/products?id=0&key=API_KEY`
+   - Request: `GET http://127.0.0.1:5000/products?key=API_KEY`
    - Response (Success):
      ```json
      [
