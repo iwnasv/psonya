@@ -6,14 +6,14 @@ class ProductFetcher:
     def __init__(self):
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument("--headless")
-        self.chrome_options.binary_location = r"C:\Users\iwnaras\Downloads\chrome-win64\chrome.exe"
-        # Bonus attempt to make Chrome chill out a bit
+        if os.name == "posix":  # Unix-based system
+            self.chrome_options.add_argument("--remote-debugging-port=9515")
+        else:  # Windows system
+            self.chrome_options.binary_location = r"C:\Users\iwnaras\Downloads\chrome-win64\chrome.exe"
+
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.chrome_options.add_argument("--disable-logging")
-        if os.name == "posix":  # Unix-based system
-            self.chrome_options.add_argument("--log-level=OFF")
-        else:  # Windows system
-            self.chrome_options.add_argument("--log-level=0")
+        self.chrome_options.add_argument("--log-level=0")
         self.driver = webdriver.Chrome(options=self.chrome_options)
         self.product_data = {}
 
