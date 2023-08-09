@@ -16,15 +16,20 @@ class Product:
 products = []
 fetcher = ProductFetcher()
 
+i = 0  # This index is used to separate product codes from the array index
+       # because eg product #4 might be a bad entry on the source
+       # so products[4] should have the next good one, eg code 5
+
 for product_code in product_codes:
     fetcher.fetch_product_data(product_code)
 
     # Skip creating an object with unavailable values
-    if fetcher.product_data[product_code] is None:
+    if fetcher.product_data[i] is None:
         continue
 
-    prod = Product(**fetcher.product_data[product_code])
+    prod = Product(**fetcher.product_data[i])
     products.append(prod)
+    i += 1
 
     # Prevent overload and possible blacklisting
     # time.sleep(1)
